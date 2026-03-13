@@ -860,7 +860,7 @@ async function loadNews(){
         svg: svgKeys[i % svgKeys.length],
         cls: ['ncc1','ncc2','ncc3'][i % 3],
         url: a.url,
-        body: null
+        body: a.body || null
       }));
       renderNews(mapped);
     } else {
