@@ -603,9 +603,9 @@ footer{background:var(--deep);border-top:1px solid var(--rim2);padding:72px 0 36
       <div id="form-body">
         <div class="fr2"><div class="fg"><label class="fl">Имя *</label><input class="fi2" id="fi-name" type="text" placeholder="Иван Иванов"/></div><div class="fg"><label class="fl">Компания *</label><input class="fi2" id="fi-company" type="text" placeholder="ООО «Альфа Системс»"/></div></div>
         <div class="fr2"><div class="fg"><label class="fl">Email *</label><input class="fi2" id="fi-email" type="email" placeholder="ivan@company.ru"/></div><div class="fg"><label class="fl">Телефон</label><input class="fi2" id="fi-phone" type="tel" placeholder="+7 (999) 000-00-00"/></div></div>
-        <div class="fg"><label class="fl">Ваша роль</label><select class="fi2 fsel"><option>CEO / Владелец</option><option>Руководитель отдела продаж</option><option>Менеджер по продажам</option><option>IT-директор / CTO</option></select></div>
-        <div class="fg"><label class="fl">Тип компании</label><select class="fi2 fsel"><option>Вендор / Разработчик ПО</option><option>Системный интегратор</option><option>Дистрибьютор IT</option><option>MSP / Провайдер услуг</option><option>ИБ-компания</option></select></div>
-        <div class="fg"><label class="fl">Размер команды продаж</label><select class="fi2 fsel"><option>1–5 человек</option><option>6–20 человек</option><option>21–50 человек</option><option>50+ человек</option></select></div>
+        <div class="fg"><label class="fl">Ваша роль</label><select id="fi-role" class="fi2 fsel"><option>CEO / Владелец</option><option>Руководитель отдела продаж</option><option>Менеджер по продажам</option><option>IT-директор / CTO</option></select></div>
+        <div class="fg"><label class="fl">Тип компании</label><select id="fi-type" class="fi2 fsel"><option>Вендор / Разработчик ПО</option><option>Системный интегратор</option><option>Дистрибьютор IT</option><option>MSP / Провайдер услуг</option><option>ИБ-компания</option></select></div>
+        <div class="fg"><label class="fl">Размер команды продаж</label><select id="fi-size" class="fi2 fsel"><option>1–5 человек</option><option>6–20 человек</option><option>21–50 человек</option><option>50+ человек</option></select></div>
         <button class="fsub2" onclick="submitForm()">Получить демо-доступ →</button>
         <p class="fnote">Данные хранятся на серверах в России. Не передаём третьим лицам.</p>
       </div>
@@ -871,9 +871,9 @@ async function submitForm(){
   const email = document.getElementById('fi-email').value.trim();
   const company = document.getElementById('fi-company').value.trim();
   const phone = document.getElementById('fi-phone').value.trim();
-  const role = document.querySelector('#form-body select:nth-of-type(1)').value;
-  const type = document.querySelector('#form-body select:nth-of-type(2)').value;
-  const size = document.querySelector('#form-body select:nth-of-type(3)').value;
+  const role = document.getElementById('fi-role').value;
+  const type = document.getElementById('fi-type').value;
+  const size = document.getElementById('fi-size').value;
 
   if(!name||!email||!company){alert('Заполните имя, компанию и email');return}
   if(!email.includes('@')){alert('Введите корректный email');return}
@@ -882,25 +882,26 @@ async function submitForm(){
   btn.textContent = 'Отправляем...';
   btn.disabled = true;
 
-  const text = `🚀 *Новая заявка на демо NewLevel CRM*\n\n👤 *Имя:* ${name}\n🏢 *Компания:* ${company}\n📧 *Email:* ${email}\n📱 *Телефон:* ${phone||'не указан'}\n💼 *Роль:* ${role||'не указана'}\n🏭 *Тип компании:* ${type||'не указан'}\n👥 *Команда:* ${size||'не указана'}\n\n⏰ ${new Date().toLocaleString('ru-RU')}`;
+  const text = `🚀 *Новая заявка на демо NewLevel CRM*\n\n👤 *Имя:* ${name}\n🏢 *Компания:* ${company}\n📧 *Email:* ${email}\n📱 *Телефон:* ${phone||'не указан'}\n💼 *Роль:* ${role}\n🏭 *Тип компании:* ${type}\n👥 *Команда:* ${size}\n\n⏰ ${new Date().toLocaleString('ru-RU')}`;
 
   try {
-    const r = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+    const r = await fetch('https://api.telegram.org/bot8755702285:AAH9ztykKpE_APXBCaqm9WQZDsSkfjMboLM/sendMessage', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({chat_id: TG_CHAT, text, parse_mode: 'Markdown'})
+      body: JSON.stringify({chat_id: '683965261', text, parse_mode: 'Markdown'})
     });
     const d = await r.json();
     if(d.ok) {
       document.getElementById('form-body').style.display='none';
       document.getElementById('form-ok').style.display='block';
     } else {
-      throw new Error('Telegram error');
+      throw new Error('Telegram error: ' + JSON.stringify(d));
     }
   } catch(e) {
+    console.error(e);
     btn.textContent = 'Получить демо-доступ →';
     btn.disabled = false;
-    alert('Ошибка отправки. Напишите нам напрямую: hello@nwlvl.ru');
+    alert('Ошибка отправки. Напишите нам: hello@nwlvl.ru');
   }
 }
 </script>
