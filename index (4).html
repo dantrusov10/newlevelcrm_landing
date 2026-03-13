@@ -832,32 +832,28 @@ function renderNews(arts){
 }
 
 async function loadNews(){
-  try{
-    // Use allorigins.win proxy to bypass CORS when opening locally
-    const rssUrl = 'https://habr.com/ru/rss/hub/sales/all/';
-    const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(
-      'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(rssUrl) + '&count=3'
-    );
-    const r = await fetch(proxyUrl, {signal: AbortSignal.timeout(5000)});
-    const raw = await r.json();
-    const d = JSON.parse(raw.contents);
-    if(d.status==='ok' && d.items && d.items.length > 0){
+  try {
+    const r = await fetch('/news.json?t=' + Date.now());
+    if(!r.ok) throw new Error('no json');
+    const live = await r.json();
+    if(live && live.length > 0) {
       const svgKeys = Object.keys(SVGS);
-      const live = d.items.map((it,i)=>({
-        title: it.title,
-        excerpt: (it.description||'').replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim().slice(0,160)+'…',
-        cat: 'Habr · Продажи',
-        date: new Date(it.pubDate).toLocaleDateString('ru-RU',{day:'numeric',month:'long'}),
-        src: 'Habr.com',
+      const mapped = live.slice(0,6).map((a,i) => ({
+        title: a.title,
+        excerpt: a.excerpt ? a.excerpt.replace(/<[^>]+>/g,'').slice(0,160) + '…' : '',
+        cat: a.cat || 'IT-продажи',
+        date: a.date || '',
+        src: a.src || 'Habr.com',
         svg: svgKeys[i % svgKeys.length],
-        cls: ['ncc1','ncc2','ncc3'][i%3],
-        url: it.link
+        cls: ['ncc1','ncc2','ncc3'][i % 3],
+        url: a.url,
+        body: null
       }));
-      renderNews([...live, ...STATIC.slice(0,3)]);
+      renderNews(mapped);
     } else {
       renderNews(STATIC);
     }
-  } catch(e){
+  } catch(e) {
     renderNews(STATIC);
   }
 }
