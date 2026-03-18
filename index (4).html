@@ -371,7 +371,7 @@ footer{background:var(--deep);border-top:1px solid var(--rim2);padding:72px 0 36
 <nav id="nav">
   <div class="ni">
     <a href="/" class="logo">
-      <div class="lm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style="width:40px;height:40px;border-radius:12px"><defs><linearGradient id="lbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#060f22"/><stop offset="100%" stop-color="#0a1c3e"/></linearGradient><linearGradient id="lnl" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1e64ff"/><stop offset="100%" stop-color="#00e5ff"/></linearGradient></defs><rect width="100" height="100" rx="22" fill="url(#lbg)"/><path d="M10 20L10 10L20 10" fill="none" stroke="#00e5ff" stroke-width="3" stroke-linecap="round" opacity=".85"/><path d="M90 80L90 90L80 90" fill="none" stroke="#1e64ff" stroke-width="3" stroke-linecap="round" opacity=".85"/><text x="50" y="58" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="44" font-weight="900" fill="url(#lnl)">NL</text></svg></div>
+      <div class="lm"><svg viewBox="0 0 100 100" style="width:40px;height:40px;border-radius:12px"><defs><linearGradient id="lbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#060f22"/><stop offset="100%" stop-color="#0a1c3e"/></linearGradient><linearGradient id="lnl" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1e64ff"/><stop offset="100%" stop-color="#00e5ff"/></linearGradient><filter id="lg"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect width="100" height="100" rx="22" fill="url(#lbg)"/><path d="M10,20 L10,10 L20,10" fill="none" stroke="#00e5ff" stroke-width="3" stroke-linecap="round" opacity="0.85"/><path d="M90,80 L90,90 L80,90" fill="none" stroke="#1e64ff" stroke-width="3" stroke-linecap="round" opacity="0.85"/><text x="50" y="68" text-anchor="middle" dominant-baseline="central" font-family="Arial Black,sans-serif" font-size="44" font-weight="900" letter-spacing="-3" fill="url(#lnl)" filter="url(#lg)">NL</text></svg></div>
       <div><div class="ln">NewLevel CRM</div><div class="ls">для IT&#x2011;продаж</div></div>
     </a>
     <nav class="nc">
@@ -844,29 +844,48 @@ function renderNews(arts){
   });
 }
 
+const CMS_BASE = 'https://cms-api.nwlvl.ru';
+const CMS_NEWS_API = `${CMS_BASE}/api/collections/site_articles/records?filter=(status=%22published%22)&sort=-published_at&expand=category_id&perPage=6`;
+
+function stripHtml(html) {
+  return String(html || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function formatRuDate(value) {
+  if(!value) return '';
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return value;
+  return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
 async function loadNews(){
   try {
-    const r = await fetch('/news.json?t=' + Date.now());
-    if(!r.ok) throw new Error('no json');
-    const live = await r.json();
-    if(live && live.length > 0) {
+    const r = await fetch(CMS_NEWS_API, { headers: { 'Accept': 'application/json' } });
+    if(!r.ok) throw new Error('cms error');
+    const data = await r.json();
+    const items = Array.isArray(data) ? data : (data.items || []);
+    if(items.length > 0) {
       const svgKeys = Object.keys(SVGS);
-      const mapped = live.slice(0,6).map((a,i) => ({
-        title: a.title,
-        excerpt: a.excerpt ? a.excerpt.replace(/<[^>]+>/g,'').slice(0,160) + '…' : '',
-        cat: a.cat || 'IT-продажи',
-        date: a.date || '',
-        src: a.src || 'Habr.com',
-        svg: svgKeys[i % svgKeys.length],
-        cls: ['ncc1','ncc2','ncc3'][i % 3],
-        url: a.url,
-        body: a.body || null
-      }));
+      const mapped = items.slice(0,6).map((a,i) => {
+        const plain = stripHtml(a.content || '');
+        return {
+          title: a.title || 'Без названия',
+          excerpt: a.excerpt ? a.excerpt.slice(0,160) + (a.excerpt.length > 160 ? '…' : '') : (plain ? plain.slice(0,160) + (plain.length > 160 ? '…' : '') : ''),
+          cat: a?.expand?.category_id?.name || a?.expand?.category_id?.slug || 'IT-продажи',
+          date: formatRuDate(a.published_at || a.created),
+          src: 'NewLevel CMS',
+          svg: svgKeys[i % svgKeys.length],
+          cls: ['ncc1','ncc2','ncc3'][i % 3],
+          url: a.slug ? `/blog/${a.slug}` : '',
+          body: a.content || null
+        };
+      });
       renderNews(mapped);
     } else {
       renderNews(STATIC);
     }
   } catch(e) {
+    console.error('Failed to load CMS news', e);
     renderNews(STATIC);
   }
 }
