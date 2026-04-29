@@ -6,6 +6,14 @@
   <title>Статья — NewLevel CRM</title>
   <meta name="description" content="Экспертные статьи NewLevel CRM по IT-продажам, ИИ и тендерам." />
   <meta name="robots" content="index,follow" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="NewLevel CRM" />
+  <meta property="og:title" content="Статья — NewLevel CRM" />
+  <meta property="og:description" content="Экспертные статьи NewLevel CRM по IT-продажам, ИИ и тендерам." />
+  <meta property="og:url" content="https://nwlvl.ru/blog" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Статья — NewLevel CRM" />
+  <meta name="twitter:description" content="Экспертные статьи NewLevel CRM по IT-продажам, ИИ и тендерам." />
   <link rel="canonical" id="canonical-link" href="https://nwlvl.ru/blog" />
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Onest:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
@@ -32,6 +40,9 @@
     .article{background:var(--surface);border:1px solid var(--rim2);border-radius:20px;padding:28px}
     .article p{color:#d6e6ff;margin:0 0 16px}
     .article h2,.article h3{font-family:'Unbounded',sans-serif;letter-spacing:-.4px;line-height:1.25;margin:24px 0 10px}
+    .related{margin-top:24px;padding-top:18px;border-top:1px solid var(--rim2)}
+    .related h3{font-family:'Unbounded',sans-serif;font-size:15px;margin-bottom:10px}
+    .related a{display:block;color:var(--ice);text-decoration:none;margin:8px 0;font-size:14px}
     .side{display:flex;flex-direction:column;gap:14px}
     .card{background:var(--surface);border:1px solid var(--rim2);border-radius:16px;padding:16px}
     .btn{display:inline-flex;align-items:center;justify-content:center;width:100%;text-decoration:none;border-radius:10px;padding:11px 14px;font-weight:600;font-size:14px}
@@ -84,8 +95,14 @@
         <div id="c-result"></div>
       </div>
       <a class="btn btn-main" href="/#contact">Получить демо NewLevel CRM →</a>
+      <a class="btn btn-ghost" href="/#pricing">Смотреть тарифы</a>
+      <a class="btn btn-ghost" href="/#compare">Сравнение с альтернативами</a>
     </aside>
   </section>
+
+  <script type="application/ld+json" id="article-schema">
+  {}
+  </script>
 
   <script>
     const CMS_BASE = 'https://cms-api.nwlvl.ru';
@@ -115,8 +132,56 @@
       document.title = `${title} — NewLevel CRM`;
       document.querySelector('meta[name="description"]').setAttribute('content', description || '');
       document.querySelector('meta[name="robots"]').setAttribute('content', robots || 'index,follow');
+      document.querySelector('meta[property="og:title"]').setAttribute('content', `${title} — NewLevel CRM`);
+      document.querySelector('meta[property="og:description"]').setAttribute('content', description || '');
+      document.querySelector('meta[name="twitter:title"]').setAttribute('content', `${title} — NewLevel CRM`);
+      document.querySelector('meta[name="twitter:description"]').setAttribute('content', description || '');
       const canonical = document.getElementById('canonical-link');
-      if (canonical && slug) canonical.href = `https://nwlvl.ru/blog/${encodeURIComponent(slug)}`;
+      if (canonical && slug) {
+        const url = `https://nwlvl.ru/blog/${encodeURIComponent(slug)}`;
+        canonical.href = url;
+        document.querySelector('meta[property="og:url"]').setAttribute('content', url);
+      }
+    }
+
+    function setArticleSchema(item, source) {
+      const schema = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": item.title || "",
+        "description": item.seo_description || item.excerpt || "",
+        "datePublished": item.published_at || item.created || "",
+        "dateModified": item.updated || item.published_at || item.created || "",
+        "author": {
+          "@type": "Organization",
+          "name": source || "Команда NewLevel CRM"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "NewLevel CRM",
+          "url": "https://nwlvl.ru/"
+        },
+        "mainEntityOfPage": `https://nwlvl.ru/blog/${encodeURIComponent(slug || "")}`
+      };
+      document.getElementById('article-schema').textContent = JSON.stringify(schema);
+    }
+
+    async function loadRelated(currentSlug) {
+      const r = await fetch(`${CMS_BASE}/api/collections/site_articles/records?filter=(status=%22published%22)&sort=-published_at&perPage=8`);
+      if (!r.ok) return;
+      const data = await r.json();
+      const items = (data.items || []).filter(x => x.slug && x.slug !== currentSlug).slice(0, 3);
+      if (!items.length) return;
+      const related = document.createElement('div');
+      related.className = 'related';
+      related.innerHTML = `<h3>Читайте также</h3>`;
+      items.forEach(x => {
+        const a = document.createElement('a');
+        a.href = `/blog/${encodeURIComponent(x.slug)}`;
+        a.textContent = x.title || 'Статья';
+        related.appendChild(a);
+      });
+      document.getElementById('content').appendChild(related);
     }
 
     async function load() {
@@ -151,6 +216,8 @@
       }
 
       setMeta(item.seo_title || item.title || 'Статья', item.seo_description || item.excerpt || '', item.robots || 'index,follow');
+      setArticleSchema(item, source);
+      await loadRelated(item.slug || '');
     }
 
     async function sendComment() {

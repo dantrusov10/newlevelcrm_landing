@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Инструкция и FAQ — NewLevel CRM</title>
   <meta name="description" content="Полная инструкция NewLevel CRM: роль администратора, работа менеджера со сделкой, FAQ и onboarding." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="NewLevel CRM" />
+  <meta property="og:title" content="Инструкция и FAQ — NewLevel CRM" />
+  <meta property="og:description" content="Полная инструкция NewLevel CRM: роль администратора, работа менеджера со сделкой, FAQ и onboarding." />
+  <meta property="og:url" content="https://nwlvl.ru/help.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Инструкция и FAQ — NewLevel CRM" />
+  <meta name="twitter:description" content="Полная инструкция NewLevel CRM: роль администратора, работа менеджера со сделкой, FAQ и onboarding." />
+  <link rel="canonical" href="https://nwlvl.ru/help.html" />
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Onest:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root{--void:#020509;--surface:#08152a;--rim:rgba(30,100,255,.14);--rim2:rgba(30,100,255,.07);--electric:#1e64ff;--ice:#00e5ff;--t1:#f0f6ff;--t2:#8ba8cc}
@@ -21,6 +30,10 @@
     h1{font-family:'Unbounded',sans-serif;font-size:clamp(30px,4vw,48px);line-height:1.1;letter-spacing:-1px}
     .sub{margin-top:14px;color:var(--t2);max-width:700px;line-height:1.7}
     .doc{padding:18px 0 72px}
+    .layout{display:grid;grid-template-columns:250px 1fr;gap:16px}
+    .toc{position:sticky;top:84px;align-self:start;background:var(--surface);border:1px solid var(--rim2);border-radius:14px;padding:14px}
+    .toc a{display:block;color:var(--t2);text-decoration:none;font-size:13px;padding:6px 0}
+    .toc a:hover{color:var(--ice)}
     .sec{background:var(--surface);border:1px solid var(--rim2);border-radius:16px;padding:20px;margin-bottom:14px}
     .sec h2{font-family:'Unbounded',sans-serif;font-size:20px;line-height:1.25;margin-bottom:12px}
     .sec h3{font-family:'Unbounded',sans-serif;font-size:15px;line-height:1.3;margin:14px 0 8px}
@@ -28,6 +41,8 @@
     .sec ul,.sec ol{padding-left:20px}
     .muted{color:var(--t2)}
     hr{border:none;border-top:1px solid var(--rim2);margin:14px 0}
+    .next{margin-top:14px;padding:12px;border:1px dashed var(--rim);border-radius:10px}
+    @media(max-width:980px){.layout{grid-template-columns:1fr}.toc{position:static}}
   </style>
 </head>
 <body>
@@ -48,8 +63,17 @@
       <p class="sub">NewLevel CRM — инструкция с упором на Админа и Менеджера. Ниже полный материал по настройке, работе со сделкой и операционному регламенту.</p>
     </section>
 
-    <section class="doc">
-      <article class="sec">
+    <section class="doc layout">
+      <aside class="toc">
+        <a href="#admin">Администратор</a>
+        <a href="#manager">Менеджер</a>
+        <a href="#reglament">Регламент</a>
+        <a href="#faq-admin">FAQ админа</a>
+        <a href="#faq-manager">FAQ менеджера</a>
+        <a href="#onboarding">Onboarding</a>
+      </aside>
+      <div>
+      <article class="sec" id="admin">
         <h2>Часть 1. Возможности администратора</h2>
         <h3>1) Управление пользователями и ролями</h3>
         <ul>
@@ -77,9 +101,10 @@
           <li>часть AI-поведения определяется интеграцией, а не только UI;</li>
           <li>расширенные сущности могут зависеть от версии схемы/окружения.</li>
         </ul>
+        <div class="next"><strong>Что делать дальше:</strong> проверьте роли и обязательные поля, затем синхронизируйте этапы воронки с фактическим процессом продаж.</div>
       </article>
 
-      <article class="sec">
+      <article class="sec" id="manager">
         <h2>Часть 2. Работа менеджера со сделкой</h2>
         <h3>Основные разделы</h3>
         <ul>
@@ -107,9 +132,10 @@
           <li>структурирование контекста и причин.</li>
         </ul>
         <p><strong>Важно:</strong> ИИ — помощник, а не замена менеджера.</p>
+        <div class="next"><strong>Что делать дальше:</strong> внедрите стандарт комментариев и обновления этапов после каждого клиентского касания.</div>
       </article>
 
-      <article class="sec">
+      <article class="sec" id="reglament">
         <h2>Короткий регламент менеджера</h2>
         <p>После любого клиентского контакта:</p>
         <ol>
@@ -119,9 +145,10 @@
           <li>Проверить AI-блок и зафиксировать, что берётся в работу.</li>
           <li>Прикрепить артефакт (документ/ссылка), если он появился.</li>
         </ol>
+        <div class="next"><strong>Что делать дальше:</strong> превратите этот регламент в ежедневный чек-лист для команды.</div>
       </article>
 
-      <article class="sec">
+      <article class="sec" id="faq-admin">
         <h2>FAQ по работе администратора</h2>
         <ul>
           <li><strong>Что админ может настраивать?</strong> Пользователей/роли, этапы воронки, структуру полей, парсеры, прайсы и шаблоны КП.</li>
@@ -131,7 +158,7 @@
         </ul>
       </article>
 
-      <article class="sec">
+      <article class="sec" id="faq-manager">
         <h2>FAQ по работе со сделкой (менеджер)</h2>
         <ul>
           <li><strong>Где смотреть историю сделки?</strong> В <code>Timeline / Лента изменений</code> карточки.</li>
@@ -143,7 +170,7 @@
         </ul>
       </article>
 
-      <article class="sec">
+      <article class="sec" id="onboarding">
         <h2>Шаблон onboarding для новых менеджеров</h2>
         <ol>
           <li>Войти в CRM.</li>
@@ -154,8 +181,21 @@
           <li>Сделать 1 экспорт списка сделок.</li>
         </ol>
         <p class="muted">Поддержка: зафиксируйте шаги, приложите скрин, укажите сделку/компанию и передайте запрос администратору CRM.</p>
+        <div class="next"><strong>Что делать дальше:</strong> после онбординга назначьте первую контрольную сессию и проверьте качество заполнения карточек.</div>
       </article>
+      </div>
     </section>
   </main>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"Кто может создавать пользователей и выдавать роли?","acceptedAnswer":{"@type":"Answer","text":"Только администратор."}},
+      {"@type":"Question","name":"Где смотреть историю по сделке?","acceptedAnswer":{"@type":"Answer","text":"Во вкладке Timeline / Лента изменений внутри карточки сделки."}},
+      {"@type":"Question","name":"Можно ли полностью полагаться на score ИИ?","acceptedAnswer":{"@type":"Answer","text":"Нет. Score является ориентиром, финальное решение принимает менеджер."}}
+    ]
+  }
+  </script>
 </body>
 </html>
