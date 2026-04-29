@@ -240,6 +240,23 @@ function srcBadge(src) {
   return {cls:'src-nl',label:src};
 }
 
+function sourceFromUrl(url) {
+  if (!url) return '';
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, '').toLowerCase();
+    if (host.includes('habr')) return 'Habr';
+    if (host.includes('vc.ru')) return 'VC.ru';
+    if (host.includes('cnews')) return 'CNews';
+    if (host.includes('rbc')) return 'RBC';
+    if (host.includes('lenta')) return 'Lenta.ru';
+    if (host.includes('ria')) return 'РИА Новости';
+    if (host.includes('kommersant')) return 'Коммерсант';
+    return host;
+  } catch(e) {
+    return '';
+  }
+}
+
 let allArticles = [];
 let filtered = [];
 let currentPage = 1;
@@ -266,6 +283,10 @@ function normalizeCmsArticle(item) {
   const cat = rawCategory?.name || rawCategory?.slug || item.category || 'IT-продажи';
   const body = item.content || '';
   const excerpt = item.excerpt || stripHtml(body).slice(0, 220) + (stripHtml(body).length > 220 ? '…' : '');
+  const canonicalUrl = item.canonical_url || '';
+  const aiArticle = String(item.slug || '').startsWith('ai-');
+  const derivedSource = sourceFromUrl(canonicalUrl);
+  const src = aiArticle ? 'Команда NewLevel CRM' : (derivedSource || 'NewLevel CRM');
 
   return {
     id: item.id,
@@ -274,7 +295,9 @@ function normalizeCmsArticle(item) {
     body,
     cat,
     date: formatRuDate(item.published_at || item.created),
-    src: 'NewLevel CMS',
+    src,
+    canonicalUrl,
+    aiArticle,
     url: item.slug ? `/blog/${encodeURIComponent(item.slug)}` : ''
   };
 }

@@ -639,7 +639,7 @@ footer{background:var(--deep);border-top:1px solid var(--rim2);padding:72px 0 36
       <div class="fcol"><h4>Компания</h4><ul class="flinks"><li><a href="#news">Блог</a></li><li><a href="#contact">Демо</a></li><li><a href="/help.html">Документация</a></li><li><a href="#">Партнёрам</a></li><li><a href="#">Дорожная карта</a></li></ul></div>
       <div class="fcol"><h4>Контакты</h4><ul class="flinks"><li><a href="mailto:hello@nwlvl.ru">hello@nwlvl.ru</a></li><li><a href="https://t.me/newlevelcrm">Telegram</a></li></ul></div>
     </div>
-    <div class="fbot"><span class="fcp">© 2025 NewLevel CRM</span><span class="frf">🇷🇺 Разработано в России</span><div class="fleg"><a href="#">Конфиденциальность</a><a href="#">Соглашение</a></div></div>
+    <div class="fbot"><span class="fcp">© 2025 NewLevel CRM</span><span class="frf">🇷🇺 Разработано в России</span><div class="fleg"><a href="/personal-data-offer.html">Оферта ПДн</a><a href="/help.html">Соглашение</a></div></div>
   </div>
 </footer>
 
@@ -860,6 +860,23 @@ function formatRuDate(value) {
   return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
+function sourceFromUrl(url) {
+  if (!url) return '';
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, '').toLowerCase();
+    if (host.includes('habr')) return 'Habr';
+    if (host.includes('vc.ru')) return 'VC.ru';
+    if (host.includes('cnews')) return 'CNews';
+    if (host.includes('rbc')) return 'RBC';
+    if (host.includes('lenta')) return 'Lenta.ru';
+    if (host.includes('ria')) return 'РИА Новости';
+    if (host.includes('kommersant')) return 'Коммерсант';
+    return host;
+  } catch(e) {
+    return '';
+  }
+}
+
 async function loadNews(){
   try {
     const r = await fetch(CMS_NEWS_API, { headers: { 'Accept': 'application/json' } });
@@ -870,12 +887,15 @@ async function loadNews(){
       const svgKeys = Object.keys(SVGS);
       const mapped = items.slice(0,6).map((a,i) => {
         const plain = stripHtml(a.content || '');
+        const canonicalUrl = a.canonical_url || '';
+        const aiArticle = String(a.slug || '').startsWith('ai-');
+        const source = aiArticle ? 'Команда NewLevel CRM' : (sourceFromUrl(canonicalUrl) || 'NewLevel CRM');
         return {
           title: a.title || 'Без названия',
           excerpt: a.excerpt ? a.excerpt.slice(0,160) + (a.excerpt.length > 160 ? '…' : '') : (plain ? plain.slice(0,160) + (plain.length > 160 ? '…' : '') : ''),
           cat: a?.expand?.category_id?.name || a?.expand?.category_id?.slug || 'IT-продажи',
           date: formatRuDate(a.published_at || a.created),
-          src: 'NewLevel CMS',
+          src: source,
           svg: svgKeys[i % svgKeys.length],
           cls: ['ncc1','ncc2','ncc3'][i % 3],
           url: a.slug ? `/blog/${encodeURIComponent(a.slug)}` : '',

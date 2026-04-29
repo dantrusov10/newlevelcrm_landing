@@ -6,36 +6,82 @@
   <title>Статья — NewLevel CRM</title>
   <meta name="description" content="Экспертные статьи NewLevel CRM по IT-продажам, ИИ и тендерам." />
   <meta name="robots" content="index,follow" />
-  <link rel="canonical" id="canonical-link" href="https://nwlvl.ru/blog-post.html" />
+  <link rel="canonical" id="canonical-link" href="https://nwlvl.ru/blog" />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Onest:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
-    body { margin: 0; background: #020509; color: #f0f6ff; font-family: Arial, sans-serif; }
-    .w { max-width: 860px; margin: 0 auto; padding: 24px; }
-    a { color: #6ea8ff; }
-    .meta { color: #8ba8cc; font-size: 14px; margin-bottom: 16px; }
-    .content p { line-height: 1.7; color: #d7e5fa; }
-    .content h2, .content h3 { line-height: 1.3; }
-    .card { border: 1px solid rgba(30,100,255,.25); border-radius: 12px; padding: 16px; margin-top: 20px; background: #08152a; }
-    .btn { display: inline-block; margin-top: 16px; padding: 10px 14px; border: 1px solid rgba(30,100,255,.4); border-radius: 8px; text-decoration: none; }
+    :root{--void:#020509;--deep:#050d18;--surface:#08152a;--elevated:#0c1e3d;--rim:rgba(30,100,255,.14);--rim2:rgba(30,100,255,.07);--electric:#1e64ff;--ice:#00e5ff;--t1:#f0f6ff;--t2:#8ba8cc;--t3:#3a5a80}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:var(--void);color:var(--t1);font-family:'Onest',sans-serif;line-height:1.7}
+    #nav{position:sticky;top:0;z-index:20;background:rgba(2,5,9,.93);backdrop-filter:blur(24px);border-bottom:1px solid var(--rim)}
+    .ni{max-width:1200px;margin:0 auto;padding:0 32px;height:68px;display:flex;align-items:center;justify-content:space-between}
+    .logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--t1)}
+    .lm{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#1e64ff,#00e5ff);display:flex;align-items:center;justify-content:center;box-shadow:0 0 22px rgba(30,100,255,.45)}
+    .ln{font-family:'Unbounded',sans-serif;font-size:14px}
+    .nr{display:flex;gap:10px}
+    .nl,.ncta{font-size:13px;text-decoration:none;padding:8px 14px;border-radius:8px}
+    .nl{border:1px solid var(--rim);color:var(--t2)}
+    .ncta{background:var(--electric);color:#fff}
+    .hero{max-width:1000px;margin:0 auto;padding:48px 32px 28px}
+    .crumb{font-size:13px;color:var(--t2);text-decoration:none;display:inline-block;margin-bottom:20px}
+    h1{font-family:'Unbounded',sans-serif;font-size:clamp(32px,3.8vw,50px);line-height:1.08;letter-spacing:-1.5px;margin-bottom:16px}
+    .meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;color:var(--t2);font-size:13px}
+    .src{padding:3px 10px;border-radius:999px;border:1px solid var(--rim);background:var(--surface)}
+    .src.ai{color:#00d87a;border-color:rgba(0,216,122,.3)}
+    .src.ext{color:var(--ice);border-color:rgba(0,229,255,.3)}
+    .wrap{max-width:1000px;margin:0 auto;padding:0 32px 64px;display:grid;grid-template-columns:1fr 300px;gap:22px}
+    .article{background:var(--surface);border:1px solid var(--rim2);border-radius:20px;padding:28px}
+    .article p{color:#d6e6ff;margin:0 0 16px}
+    .article h2,.article h3{font-family:'Unbounded',sans-serif;letter-spacing:-.4px;line-height:1.25;margin:24px 0 10px}
+    .side{display:flex;flex-direction:column;gap:14px}
+    .card{background:var(--surface);border:1px solid var(--rim2);border-radius:16px;padding:16px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;width:100%;text-decoration:none;border-radius:10px;padding:11px 14px;font-weight:600;font-size:14px}
+    .btn-main{background:var(--electric);color:#fff}
+    .btn-ghost{border:1px solid var(--rim);color:var(--t1)}
+    .field{width:100%;background:#061024;color:#fff;border:1px solid #284677;border-radius:8px;padding:10px;margin-top:8px}
+    #c-result{margin-top:8px;color:var(--t2);font-size:13px}
+    @media(max-width:960px){.wrap{grid-template-columns:1fr}.side{order:2}}
   </style>
 </head>
 <body>
-  <div class="w">
-    <a href="/blog.html">← Ко всем статьям</a>
-    <h1 id="title">Загрузка...</h1>
-    <div class="meta" id="meta"></div>
-    <div class="content" id="content"></div>
-
-    <div class="card">
-      <strong>Комментарии</strong>
-      <p style="margin:8px 0 12px">Оставьте обратную связь по статье. Комментарий отправится в редакцию.</p>
-      <input id="c-name" type="text" placeholder="Ваше имя" style="width:100%;margin-bottom:8px;padding:10px;border-radius:8px;border:1px solid #284677;background:#061024;color:#fff">
-      <textarea id="c-text" placeholder="Комментарий" rows="4" style="width:100%;margin-bottom:8px;padding:10px;border-radius:8px;border:1px solid #284677;background:#061024;color:#fff"></textarea>
-      <button id="c-send" style="padding:10px 14px;border:none;border-radius:8px;background:#1e64ff;color:#fff;cursor:pointer">Отправить комментарий</button>
-      <div id="c-result" style="margin-top:8px;color:#8ba8cc;font-size:14px"></div>
+  <nav id="nav">
+    <div class="ni">
+      <a href="/" class="logo"><div class="lm">NL</div><div class="ln">NewLevel CRM</div></a>
+      <div class="nr">
+        <a class="nl" href="/blog">Ко всем статьям</a>
+        <a class="ncta" href="/#contact">Получить доступ</a>
+      </div>
     </div>
+  </nav>
 
-    <a class="btn" href="/#contact">Получить демо NewLevel CRM →</a>
-  </div>
+  <section class="hero">
+    <a class="crumb" href="/blog">← Ко всем статьям</a>
+    <h1 id="title">Загрузка...</h1>
+    <div class="meta">
+      <span id="date"></span>
+      <span>·</span>
+      <span id="source-badge" class="src">NewLevel CRM</span>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <article class="article" id="content"></article>
+    <aside class="side">
+      <div class="card">
+        <div style="font-weight:600;margin-bottom:10px">Источник</div>
+        <div id="source-text" style="color:var(--t2);font-size:14px"></div>
+        <a id="orig-link" class="btn btn-ghost" href="#" target="_blank" rel="noopener" style="margin-top:12px;display:none">Перейти к оригиналу ↗</a>
+      </div>
+      <div class="card">
+        <div style="font-weight:600">Комментарии</div>
+        <p style="margin-top:8px;color:var(--t2);font-size:13px">Комментарий отправится в редакцию.</p>
+        <input id="c-name" class="field" type="text" placeholder="Ваше имя" />
+        <textarea id="c-text" class="field" rows="4" placeholder="Комментарий"></textarea>
+        <button id="c-send" class="btn btn-main" style="border:none;margin-top:8px;cursor:pointer">Отправить комментарий</button>
+        <div id="c-result"></div>
+      </div>
+      <a class="btn btn-main" href="/#contact">Получить демо NewLevel CRM →</a>
+    </aside>
+  </section>
 
   <script>
     const CMS_BASE = 'https://cms-api.nwlvl.ru';
@@ -44,32 +90,62 @@
     const slugFromPath = pathParts.length >= 2 && pathParts[0] === 'blog' ? decodeURIComponent(pathParts[1]) : '';
     const slug = slugFromPath || params.get('slug');
 
+    function sourceFromUrl(url) {
+      if (!url) return '';
+      try {
+        const host = new URL(url).hostname.replace(/^www\./, '').toLowerCase();
+        if (host.includes('habr')) return 'Habr';
+        if (host.includes('vc.ru')) return 'VC.ru';
+        if (host.includes('cnews')) return 'CNews';
+        if (host.includes('rbc')) return 'RBC';
+        if (host.includes('lenta')) return 'Lenta.ru';
+        if (host.includes('ria')) return 'РИА Новости';
+        if (host.includes('kommersant')) return 'Коммерсант';
+        return host;
+      } catch(e) {
+        return '';
+      }
+    }
+
     function setMeta(title, description, robots) {
       document.title = `${title} — NewLevel CRM`;
-      const d = document.querySelector('meta[name="description"]');
-      if (d) d.setAttribute('content', description || '');
-      const r = document.querySelector('meta[name="robots"]');
-      if (r) r.setAttribute('content', robots || 'index,follow');
+      document.querySelector('meta[name="description"]').setAttribute('content', description || '');
+      document.querySelector('meta[name="robots"]').setAttribute('content', robots || 'index,follow');
       const canonical = document.getElementById('canonical-link');
       if (canonical && slug) canonical.href = `https://nwlvl.ru/blog/${encodeURIComponent(slug)}`;
     }
 
     async function load() {
-      if (!slug) {
-        document.getElementById('title').textContent = 'Статья не найдена';
-        return;
-      }
+      if (!slug) throw new Error('slug is empty');
       const filter = encodeURIComponent(`slug="${slug}"&&status="published"`);
       const url = `${CMS_BASE}/api/collections/site_articles/records?filter=${filter}&perPage=1`;
-      const resp = await fetch(url, { headers: { 'Accept': 'application/json' } });
+      const resp = await fetch(url, { headers: { Accept: 'application/json' } });
       if (!resp.ok) throw new Error('CMS error');
       const data = await resp.json();
       const item = (data.items || [])[0];
       if (!item) throw new Error('Not found');
 
+      const canonicalUrl = item.canonical_url || '';
+      const aiArticle = String(item.slug || '').startsWith('ai-');
+      const source = aiArticle ? 'Команда NewLevel CRM' : (sourceFromUrl(canonicalUrl) || 'Внешний источник');
+
       document.getElementById('title').textContent = item.title || 'Без названия';
-      document.getElementById('meta').textContent = `${new Date(item.published_at || item.created).toLocaleDateString('ru-RU')} · Блог NewLevel CRM`;
+      document.getElementById('date').textContent = new Date(item.published_at || item.created).toLocaleDateString('ru-RU');
       document.getElementById('content').innerHTML = item.content || '<p>Контент отсутствует.</p>';
+
+      const badge = document.getElementById('source-badge');
+      badge.textContent = source;
+      badge.classList.add(aiArticle ? 'ai' : 'ext');
+
+      document.getElementById('source-text').textContent = source;
+      const origLink = document.getElementById('orig-link');
+      if (!aiArticle && canonicalUrl) {
+        origLink.href = canonicalUrl;
+        origLink.style.display = 'inline-flex';
+      } else {
+        origLink.style.display = 'none';
+      }
+
       setMeta(item.seo_title || item.title || 'Статья', item.seo_description || item.excerpt || '', item.robots || 'index,follow');
     }
 
@@ -100,7 +176,6 @@
     }
 
     document.getElementById('c-send').addEventListener('click', sendComment);
-
     load().catch((e) => {
       console.error(e);
       document.getElementById('title').textContent = 'Ошибка загрузки статьи';
