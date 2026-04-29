@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Документация и FAQ — NewLevel CRM</title>
-  <meta name="description" content="FAQ и практические инструкции по работе с NewLevel CRM: внедрение, воронка, ИИ, блог и тендерный контур." />
+  <title>Инструкция и FAQ — NewLevel CRM</title>
+  <meta name="description" content="Полная инструкция NewLevel CRM: роль администратора, работа менеджера со сделкой, FAQ и onboarding." />
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Onest:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root{--void:#020509;--surface:#08152a;--rim:rgba(30,100,255,.14);--rim2:rgba(30,100,255,.07);--electric:#1e64ff;--ice:#00e5ff;--t1:#f0f6ff;--t2:#8ba8cc}
@@ -20,12 +20,14 @@
     .hero{padding:56px 0 24px}
     h1{font-family:'Unbounded',sans-serif;font-size:clamp(30px,4vw,48px);line-height:1.1;letter-spacing:-1px}
     .sub{margin-top:14px;color:var(--t2);max-width:700px;line-height:1.7}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:24px 0 64px}
-    .card{background:var(--surface);border:1px solid var(--rim2);border-radius:16px;padding:18px}
-    .card h3{font-family:'Unbounded',sans-serif;font-size:16px;line-height:1.25}
-    .card p{margin-top:10px;color:#d1e2fa;line-height:1.65}
-    .section{margin-top:16px;margin-bottom:6px;font-size:12px;color:var(--ice);text-transform:uppercase;letter-spacing:.8px}
-    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+    .doc{padding:18px 0 72px}
+    .sec{background:var(--surface);border:1px solid var(--rim2);border-radius:16px;padding:20px;margin-bottom:14px}
+    .sec h2{font-family:'Unbounded',sans-serif;font-size:20px;line-height:1.25;margin-bottom:12px}
+    .sec h3{font-family:'Unbounded',sans-serif;font-size:15px;line-height:1.3;margin:14px 0 8px}
+    .sec p,.sec li{color:#d1e2fa;line-height:1.7}
+    .sec ul,.sec ol{padding-left:20px}
+    .muted{color:var(--t2)}
+    hr{border:none;border-top:1px solid var(--rim2);margin:14px 0}
   </style>
 </head>
 <body>
@@ -42,24 +44,117 @@
   <main class="w">
     <section class="hero">
       <a href="/" style="color:var(--t2);text-decoration:none">← На главную</a>
-      <h1 style="margin-top:16px">Документация и FAQ</h1>
-      <p class="sub">Практические ответы и быстрые инструкции для руководителей и менеджеров: как запустить NewLevel CRM, вести длинные сделки и использовать ИИ в повседневной работе.</p>
+      <h1 style="margin-top:16px">Инструкция и FAQ</h1>
+      <p class="sub">NewLevel CRM — инструкция с упором на Админа и Менеджера. Ниже полный материал по настройке, работе со сделкой и операционному регламенту.</p>
     </section>
 
-    <div class="section">FAQ</div>
-    <section class="grid">
-      <article class="card"><h3>Сколько занимает внедрение?</h3><p>Обычно 1-3 рабочих дня: этапы воронки, роли, поля и импорт текущих сделок из таблиц или CRM.</p></article>
-      <article class="card"><h3>Можно ли работать в российском контуре?</h3><p>Да. Данные и сервисы размещаются в РФ, включая аналитический и AI-контур под требования бизнеса.</p></article>
-      <article class="card"><h3>Подходит ли для сложных B2B продаж?</h3><p>Да. Система адаптирована под вендоров, интеграторов и дистрибьюторов с длинным циклом и тендерами.</p></article>
-      <article class="card"><h3>Можно ли публиковать статьи вручную?</h3><p>Да. Для редактора доступна ручная публикация в блог, вместе с SEO-данными и управлением источником.</p></article>
-    </section>
+    <section class="doc">
+      <article class="sec">
+        <h2>Часть 1. Возможности администратора</h2>
+        <h3>1) Управление пользователями и ролями</h3>
+        <ul>
+          <li>создание пользователей;</li>
+          <li>назначение ролей (<code>admin</code>, <code>manager</code>, <code>viewer</code>);</li>
+          <li>изменение роли действующего пользователя;</li>
+          <li>ограничение доступа к разделам через ролевую модель.</li>
+        </ul>
+        <p><strong>Гибкость:</strong> высокая.</p>
+        <h3>2) Настройка воронки продаж</h3>
+        <p>Администратор управляет названиями, порядком этапов и визуальной логикой pipeline.</p>
+        <p><strong>Гибкость:</strong> высокая.</p>
+        <h3>3) Настройка структуры карточек</h3>
+        <p>Можно добавлять поля, менять их состав и адаптировать карточки под отрасль/сегмент.</p>
+        <h3>4) Настройка парсеров и источников сигналов</h3>
+        <p>Настройки контактов (ЛПР/ЛВР/блокеры), медиа-источников, тендерных площадок, ключевых слов и расписаний.</p>
+        <h3>5) Настройка КП</h3>
+        <p>Управление прайс-листами, шаблонами КП, валютой, VAT и правилами расчета.</p>
+        <h3>6) Контроль качества данных</h3>
+        <p>Обязательные поля, стандарты ведения pipeline и формата комментариев/next step.</p>
+        <hr />
+        <p><strong>Ограничения администратора (AS IS):</strong></p>
+        <ul>
+          <li>AI-контур и биллинг/лимиты могут зависеть от внешнего backend-контура;</li>
+          <li>часть AI-поведения определяется интеграцией, а не только UI;</li>
+          <li>расширенные сущности могут зависеть от версии схемы/окружения.</li>
+        </ul>
+      </article>
 
-    <div class="section">Быстрый старт</div>
-    <section class="grid">
-      <article class="card"><h3>1. Настройте воронку</h3><p>Добавьте собственные этапы продаж и поля сделки. Зафиксируйте критерии перехода между этапами.</p></article>
-      <article class="card"><h3>2. Подключите AI-помощника</h3><p>Используйте ИИ для суммаризации встреч, подготовки писем и подсказок по следующим действиям.</p></article>
-      <article class="card"><h3>3. Включите блог-модуль</h3><p>Ежечасный парсинг, ежедневная AI-статья и ручная публикация дают постоянный SEO-поток контента.</p></article>
-      <article class="card"><h3>4. Настройте контроль метрик</h3><p>Отслеживайте скорость цикла, конверсию по этапам и прогноз выручки без выгрузок в Excel.</p></article>
+      <article class="sec">
+        <h2>Часть 2. Работа менеджера со сделкой</h2>
+        <h3>Основные разделы</h3>
+        <ul>
+          <li><strong>Dashboard</strong> — сводная картина;</li>
+          <li><strong>Сделки (таблица)</strong> — фильтры, сортировка, контроль;</li>
+          <li><strong>Сделки (канбан)</strong> — движение по этапам;</li>
+          <li><strong>Карточка сделки</strong> — центральное рабочее место;</li>
+          <li><strong>Компании</strong>, <strong>Импорт/Экспорт</strong>, <strong>КП</strong>.</li>
+        </ul>
+        <h3>Как вести сделку по шагам</h3>
+        <ol>
+          <li>Создать сделку и привязать компанию.</li>
+          <li>Назначить этап и ответственного.</li>
+          <li>Заполнить коммерческие параметры.</li>
+          <li>После каждого касания фиксировать комментарий в timeline.</li>
+          <li>Обновлять этап в момент изменения статуса.</li>
+          <li>Хранить документы/ссылки в файлах сделки.</li>
+          <li>Формировать КП в соответствующем модуле.</li>
+        </ol>
+        <h3>Как ИИ влияет на работу</h3>
+        <ul>
+          <li>оценка вероятности (score);</li>
+          <li>подсветка рисков;</li>
+          <li>рекомендации по следующему шагу;</li>
+          <li>структурирование контекста и причин.</li>
+        </ul>
+        <p><strong>Важно:</strong> ИИ — помощник, а не замена менеджера.</p>
+      </article>
+
+      <article class="sec">
+        <h2>Короткий регламент менеджера</h2>
+        <p>После любого клиентского контакта:</p>
+        <ol>
+          <li>Обновить этап (если нужно).</li>
+          <li>Добавить комментарий по формуле «факт → вывод → шаг → срок».</li>
+          <li>Обновить следующий шаг.</li>
+          <li>Проверить AI-блок и зафиксировать, что берётся в работу.</li>
+          <li>Прикрепить артефакт (документ/ссылка), если он появился.</li>
+        </ol>
+      </article>
+
+      <article class="sec">
+        <h2>FAQ по работе администратора</h2>
+        <ul>
+          <li><strong>Что админ может настраивать?</strong> Пользователей/роли, этапы воронки, структуру полей, парсеры, прайсы и шаблоны КП.</li>
+          <li><strong>Кто может создавать пользователей и выдавать роли?</strong> Только администратор.</li>
+          <li><strong>Почему сотрудник не видит раздел?</strong> Обычно причина в роли/правах.</li>
+          <li><strong>Где граница админ/менеджер?</strong> Админ настраивает правила, менеджер ведёт сделки в этих правилах.</li>
+        </ul>
+      </article>
+
+      <article class="sec">
+        <h2>FAQ по работе со сделкой (менеджер)</h2>
+        <ul>
+          <li><strong>Где смотреть историю сделки?</strong> В <code>Timeline / Лента изменений</code> карточки.</li>
+          <li><strong>Минимальный стандарт заполнения?</strong> Название, компания, ответственный, этап, последний комментарий, следующий шаг.</li>
+          <li><strong>Как писать комментарий?</strong> Шаблон: факт → вывод → следующий шаг → срок.</li>
+          <li><strong>Можно ли полностью полагаться на score ИИ?</strong> Нет, это ориентир.</li>
+          <li><strong>Что делать, если импорт с ошибками?</strong> Проверить формат, маппинг, обязательные поля и дубли.</li>
+          <li><strong>Что делать при потере доступа?</strong> Обратиться к администратору инстанса.</li>
+        </ul>
+      </article>
+
+      <article class="sec">
+        <h2>Шаблон onboarding для новых менеджеров</h2>
+        <ol>
+          <li>Войти в CRM.</li>
+          <li>Создать 1 компанию и 1 сделку.</li>
+          <li>Добавить комментарий в timeline.</li>
+          <li>Передвинуть сделку по этапу.</li>
+          <li>Прикрепить 1 файл или ссылку.</li>
+          <li>Сделать 1 экспорт списка сделок.</li>
+        </ol>
+        <p class="muted">Поддержка: зафиксируйте шаги, приложите скрин, укажите сделку/компанию и передайте запрос администратору CRM.</p>
+      </article>
     </section>
   </main>
 </body>
