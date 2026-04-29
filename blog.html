@@ -147,6 +147,7 @@ body{background:var(--void);color:var(--t1);font-family:'Onest',sans-serif;line-
     </a>
     <div class="nr">
       <a href="/" class="nl">← На главную</a>
+      <a href="/help.html" class="nl">FAQ</a>
       <a href="/#contact" class="ncta">Получить доступ →</a>
     </div>
   </div>
@@ -174,6 +175,7 @@ body{background:var(--void);color:var(--t1);font-family:'Onest',sans-serif;line-
         <button class="cat-btn" onclick="setCategory('Маркетинг',this)">Маркетинг</button>
         <button class="cat-btn" onclick="setCategory('Тендеры',this)">Тендеры</button>
         <button class="cat-btn" onclick="setCategory('NewLevel',this)">От нас</button>
+        <button class="cat-btn" onclick="window.location.href='/blog-editor.html'">Опубликовать</button>
       </div>
       <div class="stats-line" id="stats-line"></div>
     </div>
@@ -273,7 +275,7 @@ function normalizeCmsArticle(item) {
     cat,
     date: formatRuDate(item.published_at || item.created),
     src: 'NewLevel CMS',
-    url: item.slug ? `/blog/${item.slug}` : ''
+    url: item.slug ? `/blog/${encodeURIComponent(item.slug)}` : ''
   };
 }
 
@@ -351,7 +353,13 @@ function renderPage() {
           <span class="bcard-date">${a.date||''} ${isExternal ? '<span class="bcard-ext">↗</span>':''}</span>
         </div>
       </div>`;
-    card.addEventListener('click', () => openModal(a, idx, cls, badge));
+    card.addEventListener('click', () => {
+      if (a.url && !isExternal) {
+        window.location.href = a.url;
+        return;
+      }
+      openModal(a, idx, cls, badge);
+    });
     grid.appendChild(card);
   });
 
