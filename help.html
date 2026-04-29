@@ -3,34 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FAQ и инструкции — NewLevel CRM</title>
-  <meta name="description" content="FAQ и быстрые инструкции по работе с NewLevel CRM: воронка, сделки, ИИ, тендерный парсер и блог." />
+  <title>Документация и FAQ — NewLevel CRM</title>
+  <meta name="description" content="FAQ и практические инструкции по работе с NewLevel CRM: внедрение, воронка, ИИ, блог и тендерный контур." />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Onest:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
-    body{margin:0;background:#020509;color:#f0f6ff;font-family:Arial,sans-serif}
-    .w{max-width:900px;margin:0 auto;padding:24px}
-    .card{border:1px solid rgba(30,100,255,.24);border-radius:12px;padding:16px;background:#08152a;margin-bottom:14px}
-    h1,h2{line-height:1.2}
-    p,li{color:#c7d9f2;line-height:1.65}
-    a{color:#7bb0ff}
+    :root{--void:#020509;--surface:#08152a;--rim:rgba(30,100,255,.14);--rim2:rgba(30,100,255,.07);--electric:#1e64ff;--ice:#00e5ff;--t1:#f0f6ff;--t2:#8ba8cc}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:var(--void);color:var(--t1);font-family:'Onest',sans-serif}
+    .w{max-width:1100px;margin:0 auto;padding:0 32px}
+    #nav{position:sticky;top:0;background:rgba(2,5,9,.93);backdrop-filter:blur(18px);border-bottom:1px solid var(--rim);z-index:20}
+    .ni{height:68px;display:flex;align-items:center;justify-content:space-between}
+    .logo{text-decoration:none;color:var(--t1);font-family:'Unbounded',sans-serif}
+    .btn{display:inline-flex;padding:10px 16px;border-radius:9px;text-decoration:none;font-size:14px}
+    .btn-main{background:var(--electric);color:#fff}
+    .btn-ghost{border:1px solid var(--rim);color:var(--t2)}
+    .hero{padding:56px 0 24px}
+    h1{font-family:'Unbounded',sans-serif;font-size:clamp(30px,4vw,48px);line-height:1.1;letter-spacing:-1px}
+    .sub{margin-top:14px;color:var(--t2);max-width:700px;line-height:1.7}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:24px 0 64px}
+    .card{background:var(--surface);border:1px solid var(--rim2);border-radius:16px;padding:18px}
+    .card h3{font-family:'Unbounded',sans-serif;font-size:16px;line-height:1.25}
+    .card p{margin-top:10px;color:#d1e2fa;line-height:1.65}
+    .section{margin-top:16px;margin-bottom:6px;font-size:12px;color:var(--ice);text-transform:uppercase;letter-spacing:.8px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <div class="w">
-    <a href="/">← На главную</a>
-    <h1>FAQ и инструкции</h1>
-    <p>Короткая база знаний для команды продаж и руководителей.</p>
+  <nav id="nav">
+    <div class="w ni">
+      <a class="logo" href="/">NewLevel CRM</a>
+      <div style="display:flex;gap:8px">
+        <a class="btn btn-ghost" href="/blog">Блог</a>
+        <a class="btn btn-main" href="/#contact">Запросить демо</a>
+      </div>
+    </div>
+  </nav>
 
-    <h2>FAQ</h2>
-    <div class="card"><strong>Сколько занимает внедрение?</strong><p>Обычно 1-3 дня: настройка этапов, ролей, полей и импорт текущих сделок.</p></div>
-    <div class="card"><strong>Можно ли использовать ИИ в РФ-контуре?</strong><p>Да, данные обрабатываются в российском контуре, включая интеграции с локальными AI-провайдерами.</p></div>
-    <div class="card"><strong>Подходит ли для длинных B2B-сделок?</strong><p>Да, продукт заточен под вендоров, интеграторов и дистрибьюторов с длинным циклом и тендерами.</p></div>
+  <main class="w">
+    <section class="hero">
+      <a href="/" style="color:var(--t2);text-decoration:none">← На главную</a>
+      <h1 style="margin-top:16px">Документация и FAQ</h1>
+      <p class="sub">Практические ответы и быстрые инструкции для руководителей и менеджеров: как запустить NewLevel CRM, вести длинные сделки и использовать ИИ в повседневной работе.</p>
+    </section>
 
-    <h2>Быстрые инструкции</h2>
-    <div class="card"><strong>1. Настройка воронки</strong><p>Откройте этапы, добавьте шаги вашего процесса: лид, квалификация, демо, КП, тендер, закрытие.</p></div>
-    <div class="card"><strong>2. Запуск AI-ассистента</strong><p>В карточке сделки используйте AI для резюме встреч, follow-up писем и подготовки КП.</p></div>
-    <div class="card"><strong>3. Работа с блогом</strong><p>Автопарсер добавляет отраслевые материалы, AI-писатель публикует экспертные статьи, ручная публикация доступна через редактор блога.</p></div>
+    <div class="section">FAQ</div>
+    <section class="grid">
+      <article class="card"><h3>Сколько занимает внедрение?</h3><p>Обычно 1-3 рабочих дня: этапы воронки, роли, поля и импорт текущих сделок из таблиц или CRM.</p></article>
+      <article class="card"><h3>Можно ли работать в российском контуре?</h3><p>Да. Данные и сервисы размещаются в РФ, включая аналитический и AI-контур под требования бизнеса.</p></article>
+      <article class="card"><h3>Подходит ли для сложных B2B продаж?</h3><p>Да. Система адаптирована под вендоров, интеграторов и дистрибьюторов с длинным циклом и тендерами.</p></article>
+      <article class="card"><h3>Можно ли публиковать статьи вручную?</h3><p>Да. Для редактора доступна ручная публикация в блог, вместе с SEO-данными и управлением источником.</p></article>
+    </section>
 
-    <p><a href="/blog">Перейти в блог</a></p>
-  </div>
+    <div class="section">Быстрый старт</div>
+    <section class="grid">
+      <article class="card"><h3>1. Настройте воронку</h3><p>Добавьте собственные этапы продаж и поля сделки. Зафиксируйте критерии перехода между этапами.</p></article>
+      <article class="card"><h3>2. Подключите AI-помощника</h3><p>Используйте ИИ для суммаризации встреч, подготовки писем и подсказок по следующим действиям.</p></article>
+      <article class="card"><h3>3. Включите блог-модуль</h3><p>Ежечасный парсинг, ежедневная AI-статья и ручная публикация дают постоянный SEO-поток контента.</p></article>
+      <article class="card"><h3>4. Настройте контроль метрик</h3><p>Отслеживайте скорость цикла, конверсию по этапам и прогноз выручки без выгрузок в Excel.</p></article>
+    </section>
+  </main>
 </body>
 </html>

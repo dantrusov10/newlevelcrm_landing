@@ -620,6 +620,13 @@ footer{background:var(--deep);border-top:1px solid var(--rim2);padding:72px 0 36
         <div class="fg"><label class="fl">Ваша роль</label><select id="fi-role" class="fi2 fsel"><option>CEO / Владелец</option><option>Руководитель отдела продаж</option><option>Менеджер по продажам</option><option>IT-директор / CTO</option></select></div>
         <div class="fg"><label class="fl">Тип компании</label><select id="fi-type" class="fi2 fsel"><option>Вендор / Разработчик ПО</option><option>Системный интегратор</option><option>Дистрибьютор IT</option><option>MSP / Провайдер услуг</option><option>ИБ-компания</option></select></div>
         <div class="fg"><label class="fl">Размер команды продаж</label><select id="fi-size" class="fi2 fsel"><option>1–5 человек</option><option>6–20 человек</option><option>21–50 человек</option><option>50+ человек</option></select></div>
+        <div style="display:flex;gap:10px;align-items:flex-start;margin:10px 0 6px">
+          <input id="fi-consent" type="checkbox" style="margin-top:4px" />
+          <label for="fi-consent" class="fnote" style="margin:0">
+            Я даю согласие на обработку персональных данных и принимаю условия
+            <a href="/personal-data-offer.html" style="color:var(--ice)">оферты</a>.
+          </label>
+        </div>
         <button class="fsub2" onclick="submitForm()">Получить демо-доступ →</button>
         <p class="fnote">Данные хранятся на серверах в России. Не передаём третьим лицам.</p>
       </div>
@@ -636,7 +643,7 @@ footer{background:var(--deep);border-top:1px solid var(--rim2);padding:72px 0 36
         <p>Российская CRM для IT-продаж с интегрированным ИИ. Данные на серверах в РФ.</p>
       </div>
       <div class="fcol"><h4>Продукт</h4><ul class="flinks"><li><a href="#features">Возможности</a></li><li><a href="#pricing">Тарифы</a></li><li><a href="#compare">Сравнение</a></li><li><a href="#ai">ИИ-функции</a></li><li><a href="https://app.nwlvl.ru">Войти в CRM</a></li></ul></div>
-      <div class="fcol"><h4>Компания</h4><ul class="flinks"><li><a href="#news">Блог</a></li><li><a href="#contact">Демо</a></li><li><a href="/help.html">Документация</a></li><li><a href="#">Партнёрам</a></li><li><a href="#">Дорожная карта</a></li></ul></div>
+      <div class="fcol"><h4>Компания</h4><ul class="flinks"><li><a href="#news">Блог</a></li><li><a href="#contact">Демо</a></li><li><a href="/help.html">Документация</a></li><li><a href="#nav">Партнёрам</a></li><li><a href="#nav">Дорожная карта</a></li></ul></div>
       <div class="fcol"><h4>Контакты</h4><ul class="flinks"><li><a href="mailto:hello@nwlvl.ru">hello@nwlvl.ru</a></li><li><a href="https://t.me/newlevelcrm">Telegram</a></li></ul></div>
     </div>
     <div class="fbot"><span class="fcp">© 2025 NewLevel CRM</span><span class="frf">🇷🇺 Разработано в России</span><div class="fleg"><a href="/personal-data-offer.html">Оферта ПДн</a><a href="/help.html">Соглашение</a></div></div>
@@ -924,9 +931,11 @@ async function submitForm(){
   const role = document.getElementById('fi-role').value;
   const type = document.getElementById('fi-type').value;
   const size = document.getElementById('fi-size').value;
+  const consent = document.getElementById('fi-consent').checked;
 
   if(!name||!email||!company){alert('Заполните имя, компанию и email');return}
   if(!email.includes('@')){alert('Введите корректный email');return}
+  if(!consent){alert('Подтвердите согласие на обработку персональных данных');return}
 
   const btn = document.querySelector('.fsub2');
   btn.textContent = 'Отправляем...';

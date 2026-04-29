@@ -76,6 +76,10 @@
         <p style="margin-top:8px;color:var(--t2);font-size:13px">Комментарий отправится в редакцию.</p>
         <input id="c-name" class="field" type="text" placeholder="Ваше имя" />
         <textarea id="c-text" class="field" rows="4" placeholder="Комментарий"></textarea>
+        <label style="display:flex;gap:8px;align-items:flex-start;margin-top:8px;color:var(--t2);font-size:12px;line-height:1.4">
+          <input id="c-consent" type="checkbox" style="margin-top:2px" />
+          <span>Согласен на обработку персональных данных согласно <a href="/personal-data-offer.html" style="color:var(--ice)">оферте</a>.</span>
+        </label>
         <button id="c-send" class="btn btn-main" style="border:none;margin-top:8px;cursor:pointer">Отправить комментарий</button>
         <div id="c-result"></div>
       </div>
@@ -152,8 +156,10 @@
     async function sendComment() {
       const name = document.getElementById('c-name').value.trim();
       const text = document.getElementById('c-text').value.trim();
+      const consent = document.getElementById('c-consent').checked;
       const result = document.getElementById('c-result');
       if (!text) { result.textContent = 'Введите комментарий'; return; }
+      if (!consent) { result.textContent = 'Подтвердите согласие на обработку персональных данных.'; return; }
       const btn = document.getElementById('c-send');
       btn.disabled = true;
       btn.textContent = 'Отправка...';
