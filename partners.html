@@ -13,19 +13,51 @@
   <link rel="canonical" href="https://nwlvl.ru/partners.html" />
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Onest:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
-    :root{--void:#020509;--surface:#08152a;--rim:rgba(30,100,255,.14);--rim2:rgba(30,100,255,.07);--electric:#1e64ff;--t1:#f0f6ff;--t2:#8ba8cc}
+    :root{--void:#020509;--surface:#08152a;--rim:rgba(30,100,255,.14);--rim2:rgba(30,100,255,.07);--electric:#1e64ff;--ice:#00e5ff;--t1:#f0f6ff;--t2:#8ba8cc}
     *{margin:0;padding:0;box-sizing:border-box}
-    body{background:var(--void);color:var(--t1);font-family:'Onest',sans-serif}
-    .w{max-width:1000px;margin:0 auto;padding:0 32px}
-    .hero{padding:56px 0 20px}
+    body{background:radial-gradient(ellipse at top,rgba(30,100,255,.12),transparent 55%),var(--void);color:var(--t1);font-family:'Onest',sans-serif}
+    .w{max-width:1100px;margin:0 auto;padding:0 32px}
+    #nav{position:sticky;top:0;z-index:20;background:rgba(2,5,9,.93);backdrop-filter:blur(24px);border-bottom:1px solid var(--rim)}
+    .ni{height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .logo{display:flex;align-items:center;gap:10px;color:var(--t1);text-decoration:none}
+    .lm{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#1e64ff,#00e5ff);display:flex;align-items:center;justify-content:center;font-weight:700}
+    .ln{font-family:'Unbounded',sans-serif;font-size:14px}
+    .nc{display:flex;gap:8px}
+    .na{font-size:13px;color:var(--t2);text-decoration:none;padding:7px 12px;border-radius:8px}
+    .na:hover{background:rgba(30,100,255,.08);color:var(--t1)}
+    .nr{display:flex;gap:8px}
+    .nl,.ncta{font-size:13px;text-decoration:none;padding:8px 14px;border-radius:8px}
+    .nl{border:1px solid var(--rim);color:var(--t2)}
+    .ncta{background:var(--electric);color:#fff}
+    .hero{padding:48px 0 20px}
     .card{background:var(--surface);border:1px solid var(--rim2);border-radius:16px;padding:18px;margin:12px 0}
     h1{font-family:'Unbounded',sans-serif;font-size:clamp(30px,4vw,44px);line-height:1.1}
     p,li{color:#d0e2fa;line-height:1.65}
     ul{padding-left:20px}
     .btn{display:inline-flex;margin-top:12px;padding:10px 14px;border-radius:8px;background:var(--electric);color:#fff;text-decoration:none}
+    footer{border-top:1px solid var(--rim2);margin-top:44px;padding:26px 0}
+    .foot{display:grid;grid-template-columns:2fr 1fr 1fr;gap:18px}
+    .fcol h4{font-size:13px;margin-bottom:8px;color:var(--t2)}
+    .flinks{list-style:none;display:flex;flex-direction:column;gap:6px}
+    .flinks a{color:#d0e2fa;text-decoration:none;font-size:14px}
+    .fbot{margin-top:18px;border-top:1px solid var(--rim2);padding-top:10px;display:flex;justify-content:space-between;color:var(--t2);font-size:12px}
   </style>
 </head>
 <body>
+  <nav id="nav">
+    <div class="w ni">
+      <a href="/" class="logo"><div class="lm">NL</div><div class="ln">NewLevel CRM</div></a>
+      <nav class="nc">
+        <a class="na" href="/#features">Возможности</a>
+        <a class="na" href="/blog">Блог</a>
+        <a class="na" href="/help.html">FAQ</a>
+      </nav>
+      <div class="nr">
+        <a class="nl" href="https://app.nwlvl.ru/login">Войти</a>
+        <a class="ncta" href="/#contact">Получить доступ</a>
+      </div>
+    </div>
+  </nav>
   <main class="w">
     <section class="hero">
       <a href="/" style="color:var(--t2);text-decoration:none">← На главную</a>
@@ -42,5 +74,15 @@
       <a class="btn" href="/#contact">Подать заявку на партнёрство</a>
     </article>
   </main>
+  <footer>
+    <div class="w">
+      <div class="foot">
+        <div><a href="/" class="logo"><div class="lm">NL</div><div class="ln">NewLevel CRM</div></a><p style="margin-top:10px;color:var(--t2)">Российская CRM для IT-продаж с ИИ внутри.</p></div>
+        <div class="fcol"><h4>Разделы</h4><ul class="flinks"><li><a href="/blog">Блог</a></li><li><a href="/help.html">Документация</a></li><li><a href="/partners.html">Партнёрам</a></li></ul></div>
+        <div class="fcol"><h4>Контакты</h4><ul class="flinks"><li><a href="mailto:hello@nwlvl.ru">hello@nwlvl.ru</a></li><li><a href="/personal-data-offer.html">Оферта ПДн</a></li><li><a href="/roadmap.html">Дорожная карта</a></li></ul></div>
+      </div>
+      <div class="fbot"><span>© 2025 NewLevel CRM</span><span>Данные на серверах в РФ</span></div>
+    </div>
+  </footer>
 </body>
 </html>

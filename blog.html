@@ -25,7 +25,7 @@
 <style>
 :root{--void:#020509;--deep:#050d18;--surface:#08152a;--elevated:#0c1e3d;--rim:rgba(30,100,255,.14);--rim2:rgba(30,100,255,.07);--electric:#1e64ff;--ice:#00e5ff;--violet:#7c3aed;--success:#00d87a;--t1:#f0f6ff;--t2:#8ba8cc;--t3:#3a5a80;--t4:#1a3050;--r:16px}
 *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
-body{background:var(--void);color:var(--t1);font-family:'Onest',sans-serif;line-height:1.65;overflow-x:hidden}
+body{background:radial-gradient(ellipse at top,rgba(30,100,255,.12),transparent 55%),var(--void);color:var(--t1);font-family:'Onest',sans-serif;line-height:1.65;overflow-x:hidden}
 ::selection{background:rgba(30,100,255,.35);color:#fff}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--void)}::-webkit-scrollbar-thumb{background:var(--t4);border-radius:2px}
 
@@ -38,6 +38,9 @@ body{background:var(--void);color:var(--t1);font-family:'Onest',sans-serif;line-
 .ln{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;color:var(--t1)}
 .ls{font-size:10px;color:var(--t3);letter-spacing:.5px}
 .nr{display:flex;gap:10px;align-items:center}
+.nc{display:flex;gap:8px}
+.na{font-size:13px;color:var(--t2);text-decoration:none;padding:7px 12px;border-radius:8px}
+.na:hover{background:rgba(30,100,255,.08);color:var(--t1)}
 .nl{font-size:13.5px;font-weight:500;color:var(--t2);text-decoration:none;padding:7px 16px;border-radius:8px;border:1px solid var(--rim);transition:all .2s}
 .nl:hover{color:var(--t1);border-color:rgba(30,100,255,.4)}
 .ncta{font-size:13.5px;font-weight:600;color:#fff;text-decoration:none;padding:9px 20px;border-radius:8px;background:var(--electric);transition:all .2s}
@@ -136,6 +139,12 @@ body{background:var(--void);color:var(--t1);font-family:'Onest',sans-serif;line-
 .be:hover{background:#1a58e8;transform:translateY(-2px)}
 .bo{background:transparent;color:var(--t1);border:1px solid var(--rim)}
 .bo:hover{background:rgba(30,100,255,.1);border-color:rgba(30,100,255,.4)}
+footer{border-top:1px solid var(--rim2);margin-top:16px;padding:26px 0}
+.foot{display:grid;grid-template-columns:2fr 1fr 1fr;gap:18px}
+.fcol h4{font-size:13px;margin-bottom:8px;color:var(--t2)}
+.flinks{list-style:none;display:flex;flex-direction:column;gap:6px}
+.flinks a{color:#d0e2fa;text-decoration:none;font-size:14px}
+.fbot{margin-top:18px;border-top:1px solid var(--rim2);padding-top:10px;display:flex;justify-content:space-between;color:var(--t2);font-size:12px}
 
 /* LOADER */
 .loader{text-align:center;padding:80px 20px;color:var(--t3)}
@@ -154,6 +163,11 @@ body{background:var(--void);color:var(--t1);font-family:'Onest',sans-serif;line-
       <div class="lm"><svg viewBox="0 0 100 100" style="width:40px;height:40px;border-radius:12px"><defs><linearGradient id="lbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#060f22"/><stop offset="100%" stop-color="#0a1c3e"/></linearGradient><linearGradient id="lnl" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1e64ff"/><stop offset="100%" stop-color="#00e5ff"/></linearGradient><filter id="lg"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect width="100" height="100" rx="22" fill="url(#lbg)"/><path d="M10,20 L10,10 L20,10" fill="none" stroke="#00e5ff" stroke-width="3" stroke-linecap="round" opacity="0.85"/><path d="M90,80 L90,90 L80,90" fill="none" stroke="#1e64ff" stroke-width="3" stroke-linecap="round" opacity="0.85"/><text x="50" y="68" text-anchor="middle" dominant-baseline="central" font-family="Arial Black,sans-serif" font-size="44" font-weight="900" letter-spacing="-3" fill="url(#lnl)" filter="url(#lg)">NL</text></svg></div>
       <div><div class="ln">NewLevel CRM</div><div class="ls">для IT-продаж</div></div>
     </a>
+    <nav class="nc">
+      <a class="na" href="/#features">Возможности</a>
+      <a class="na" href="/blog">Блог</a>
+      <a class="na" href="/help.html">FAQ</a>
+    </nav>
     <div class="nr">
       <a href="/" class="nl">← На главную</a>
       <a href="/help.html" class="nl">FAQ</a>
@@ -198,6 +212,17 @@ body{background:var(--void);color:var(--t1);font-family:'Onest',sans-serif;line-
     <div class="pagination" id="pagination"></div>
   </div>
 </section>
+
+<footer>
+  <div class="w">
+    <div class="foot">
+      <div><a href="/" class="logo"><div class="lm">NL</div><div class="ln">NewLevel CRM</div></a><p style="margin-top:10px;color:var(--t2)">Российская CRM для IT-продаж с ИИ внутри.</p></div>
+      <div class="fcol"><h4>Разделы</h4><ul class="flinks"><li><a href="/blog">Блог</a></li><li><a href="/help.html">Документация</a></li><li><a href="/partners.html">Партнёрам</a></li></ul></div>
+      <div class="fcol"><h4>Контакты</h4><ul class="flinks"><li><a href="mailto:hello@nwlvl.ru">hello@nwlvl.ru</a></li><li><a href="/personal-data-offer.html">Оферта ПДн</a></li><li><a href="/roadmap.html">Дорожная карта</a></li></ul></div>
+    </div>
+    <div class="fbot"><span>© 2025 NewLevel CRM</span><span>Данные на серверах в РФ</span></div>
+  </div>
+</footer>
 
 <!-- MODAL -->
 <div id="modal-overlay" onclick="closeModal(event)">
