@@ -277,6 +277,8 @@ function srcBadge(src) {
   if(!src) return {cls:'src-nl',label:'NewLevel'};
   const s = src.toLowerCase();
   if(s.includes('habr')) return {cls:'src-habr',label:'Habr'};
+  if(s.includes('cnews')) return {cls:'src-cnews',label:'CNews'};
+  if(s.includes('comnews')) return {cls:'src-cnews',label:'ComNews'};
   if(s.includes('vc')) return {cls:'src-vc',label:'VC.ru'};
   if(s.includes('telegram') || s.includes('tg')) return {cls:'src-tg',label:'Telegram'};
   if(s.includes('newlevel') || s.includes('nl')) return {cls:'src-nl',label:'NewLevel'};
@@ -290,10 +292,10 @@ function sourceFromUrl(url) {
     if (host.includes('habr')) return 'Habr';
     if (host.includes('vc.ru')) return 'VC.ru';
     if (host.includes('cnews')) return 'CNews';
+    if (host.includes('comnews')) return 'ComNews';
     if (host.includes('rbc')) return 'RBC';
     if (host.includes('lenta')) return 'Lenta.ru';
     if (host.includes('ria')) return 'РИА Новости';
-    if (host.includes('kommersant')) return 'Коммерсант';
     return host;
   } catch(e) {
     return '';
@@ -337,7 +339,7 @@ function classifyCategory(title, excerpt, body, fallback = 'IT-продажи', 
   const [bestCat, bestScore] = scored[0] || [fallback, 0];
   if (bestScore < 2) {
     const s = String(src || '').toLowerCase();
-    if (s.includes('vc') || s.includes('ведомост') || s.includes('коммерсант') || s.includes('lenta')) return 'Маркетинг';
+    if (s.includes('vc') || s.includes('ведомост') || s.includes('lenta')) return 'Маркетинг';
     return fallback;
   }
   return bestCat;
@@ -371,11 +373,20 @@ function normalizeCmsArticle(item) {
 // Load articles
 async function loadArticles() {
   try {
-    const r = await fetch(CMS_ARTICLES_API, { headers: { 'Accept': 'application/json' } });
-    if(!r.ok) throw new Error('CMS error: ' + r.status);
-    const data = await r.json();
-    const items = Array.isArray(data) ? data : (data.items || []);
-    allArticles = items.map(normalizeCmsArticle);
+    const allItems = [];
+    let page = 1;
+    let totalPages = 1;
+    do {
+      const sep = CMS_ARTICLES_API.includes('?') ? '&' : '?';
+      const r = await fetch(`${CMS_ARTICLES_API}${sep}page=${page}`, { headers: { 'Accept': 'application/json' } });
+      if(!r.ok) throw new Error('CMS error: ' + r.status);
+      const data = await r.json();
+      const items = Array.isArray(data) ? data : (data.items || []);
+      allItems.push(...items);
+      totalPages = Number(data?.totalPages || 1);
+      page += 1;
+    } while (page <= totalPages);
+    allArticles = allItems.map(normalizeCmsArticle);
   } catch(e) {
     console.error('Failed to load CMS articles', e);
     allArticles = [];
