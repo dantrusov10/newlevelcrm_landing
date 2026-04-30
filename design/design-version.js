@@ -1,0 +1,2 @@
+window.NWLVL_DESIGN_VERSION = "v2";
+

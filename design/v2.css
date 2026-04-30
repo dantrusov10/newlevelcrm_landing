@@ -1,0 +1,152 @@
+:root {
+  --v2-fast: 180ms;
+  --v2-base: 280ms;
+  --v2-dramatic: 520ms;
+  --v2-ease: cubic-bezier(.22,.61,.36,1);
+}
+
+body.design-v2 {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(30, 100, 255, .15), transparent 58%),
+    #020509 !important;
+}
+
+body.design-v2 .v2-bg-grid,
+body.design-v2 .v2-bg-stars,
+body.design-v2 .v2-bg-constellations,
+body.design-v2 .v2-vignette,
+body.design-v2 .v2-grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+body.design-v2 .v2-bg-grid {
+  z-index: 0;
+  background:
+    linear-gradient(rgba(30, 100, 255, .14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 100, 255, .14) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at 50% 18%, #000 5%, transparent 72%);
+}
+
+body.design-v2 .v2-bg-stars {
+  z-index: 0;
+  opacity: .95;
+}
+
+body.design-v2 .v2-bg-constellations {
+  z-index: 0;
+  opacity: .7;
+}
+
+body.design-v2 .v2-vignette {
+  z-index: 1;
+  background: radial-gradient(circle at 50% 30%, transparent 45%, rgba(2, 5, 9, .34) 100%);
+}
+
+body.design-v2 .v2-grain {
+  z-index: 1;
+  opacity: .03;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, .9) .8px, transparent .8px);
+  background-size: 3px 3px;
+}
+
+body.design-v2 > *:not(.v2-bg-grid):not(.v2-bg-stars):not(.v2-bg-constellations):not(.v2-vignette):not(.v2-grain) {
+  position: relative;
+  z-index: 2;
+}
+
+body.design-v2 .ni,
+body.design-v2 .nav,
+body.design-v2 #nav {
+  backdrop-filter: blur(14px) saturate(120%);
+}
+
+body.design-v2 .sec,
+body.design-v2 .fc,
+body.design-v2 .card,
+body.design-v2 .step,
+body.design-v2 .shot,
+body.design-v2 .timeline,
+body.design-v2 .hero-panel,
+body.design-v2 .bcard,
+body.design-v2 .sv,
+body.design-v2 .acw,
+body.design-v2 #modal-box {
+  border-color: rgba(0, 229, 255, .18) !important;
+  box-shadow: 0 18px 44px rgba(2, 9, 22, .45), inset 0 1px 0 rgba(255, 255, 255, .03);
+  transition:
+    transform var(--v2-fast) var(--v2-ease),
+    box-shadow var(--v2-base) var(--v2-ease),
+    border-color var(--v2-fast) var(--v2-ease);
+}
+
+body.design-v2 .sec:hover,
+body.design-v2 .fc:hover,
+body.design-v2 .card:hover,
+body.design-v2 .step:hover,
+body.design-v2 .shot:hover,
+body.design-v2 .bcard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 229, 255, .45) !important;
+  box-shadow: 0 24px 56px rgba(0, 229, 255, .13), 0 18px 40px rgba(2, 9, 22, .52);
+}
+
+body.design-v2 .ncta,
+body.design-v2 .be,
+body.design-v2 .btn-main {
+  box-shadow: 0 10px 32px rgba(30, 100, 255, .45), 0 0 20px rgba(0, 229, 255, .18);
+}
+
+body.design-v2 .ncta:hover,
+body.design-v2 .be:hover,
+body.design-v2 .btn-main:hover {
+  transform: translateY(-2px);
+}
+
+body.design-v2 h1,
+body.design-v2 .blog-hero h1 {
+  letter-spacing: -2.15px;
+  line-height: .98;
+}
+
+body.design-v2 .hp,
+body.design-v2 .sub,
+body.design-v2 .lead,
+body.design-v2 .blog-hero p {
+  letter-spacing: .08px;
+  line-height: 1.62;
+}
+
+body.design-v2 .v2-reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  filter: blur(4px);
+  transition:
+    opacity var(--v2-dramatic) var(--v2-ease),
+    transform var(--v2-dramatic) var(--v2-ease),
+    filter var(--v2-dramatic) var(--v2-ease);
+}
+
+body.design-v2 .v2-reveal.v2-in {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+@media (max-width: 1024px) {
+  body.design-v2 .v2-bg-constellations {
+    opacity: .45;
+  }
+}
+
+@media (max-width: 768px) {
+  body.design-v2 .v2-bg-stars {
+    opacity: .62;
+  }
+  body.design-v2 .v2-bg-constellations {
+    opacity: .25;
+  }
+}
+
