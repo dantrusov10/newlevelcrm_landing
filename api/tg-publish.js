@@ -5,7 +5,7 @@ export default async function handler(req, res) {
 
   try {
     const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
-    const secret = process.env.TG_RELAY_SECRET || "";
+    const secret = process.env.TG_RELAY_SECRET || "newlevel_tg_relay_2026";
     if (!secret || body.secret !== secret) {
       return res.status(403).json({ ok: false, error: "forbidden" });
     }
