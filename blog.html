@@ -302,6 +302,16 @@ function sourceFromUrl(url) {
   }
 }
 
+function isBlockedSource(url) {
+  if (!url) return false;
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, '').toLowerCase();
+    return host.includes('kommersant');
+  } catch(e) {
+    return String(url).toLowerCase().includes('kommersant');
+  }
+}
+
 let allArticles = [];
 let filtered = [];
 let currentPage = 1;
@@ -386,7 +396,9 @@ async function loadArticles() {
       totalPages = Number(data?.totalPages || 1);
       page += 1;
     } while (page <= totalPages);
-    allArticles = allItems.map(normalizeCmsArticle);
+    allArticles = allItems
+      .filter(item => !isBlockedSource(item.canonical_url || ''))
+      .map(normalizeCmsArticle);
   } catch(e) {
     console.error('Failed to load CMS articles', e);
     allArticles = [];

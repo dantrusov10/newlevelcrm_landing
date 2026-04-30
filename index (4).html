@@ -905,13 +905,22 @@ function sourceFromUrl(url) {
     if (host.includes('habr')) return 'Habr';
     if (host.includes('vc.ru')) return 'VC.ru';
     if (host.includes('cnews')) return 'CNews';
+    if (host.includes('comnews')) return 'ComNews';
     if (host.includes('rbc')) return 'RBC';
     if (host.includes('lenta')) return 'Lenta.ru';
     if (host.includes('ria')) return 'РИА Новости';
-    if (host.includes('kommersant')) return 'Коммерсант';
     return host;
   } catch(e) {
     return '';
+  }
+}
+function isBlockedSourceUrl(url) {
+  if (!url) return false;
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, '').toLowerCase();
+    return host.includes('kommersant');
+  } catch(e) {
+    return String(url).toLowerCase().includes('kommersant');
   }
 }
 
@@ -923,7 +932,9 @@ async function loadNews(){
     const items = Array.isArray(data) ? data : (data.items || []);
     if(items.length > 0) {
       const svgKeys = Object.keys(SVGS);
-      const mapped = items.slice(0,6).map((a,i) => {
+      const mapped = items
+      .filter(a => !isBlockedSourceUrl(a.canonical_url || ''))
+      .slice(0,6).map((a,i) => {
         const plain = stripHtml(a.content || '');
         const canonicalUrl = a.canonical_url || '';
         const aiArticle = String(a.slug || '').startsWith('ai-');

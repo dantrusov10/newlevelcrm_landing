@@ -162,10 +162,18 @@
         if (host.includes('rbc')) return 'RBC';
         if (host.includes('lenta')) return 'Lenta.ru';
         if (host.includes('ria')) return 'РИА Новости';
-        if (host.includes('kommersant')) return 'Коммерсант';
         return host;
       } catch(e) {
         return '';
+      }
+    }
+    function isBlockedSource(url) {
+      if (!url) return false;
+      try {
+        const host = new URL(url).hostname.replace(/^www\./, '').toLowerCase();
+        return host.includes('kommersant');
+      } catch(e) {
+        return String(url).toLowerCase().includes('kommersant');
       }
     }
 
@@ -236,6 +244,10 @@
       if (!item) throw new Error('Not found');
 
       const canonicalUrl = item.canonical_url || '';
+      if (isBlockedSource(canonicalUrl)) {
+        window.location.replace('/blog');
+        return;
+      }
       const aiArticle = String(item.slug || '').startsWith('ai-');
       const source = aiArticle ? 'Команда NewLevel CRM' : (sourceFromUrl(canonicalUrl) || 'Внешний источник');
 
