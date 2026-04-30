@@ -176,6 +176,18 @@
         return String(url).toLowerCase().includes('kommersant');
       }
     }
+    const BLOCKED_TERMS = [
+      'украин','ркн','роскомнадзор','сво','спецоперац','войн','боев',
+      'убийств','убил','погиб','погибл','тюрьм','посадили','осужден',
+      'осудили','арест','задержан','задержали','приговор','срок лишения'
+    ];
+    function hasBlockedTerms(...parts) {
+      const text = parts
+        .map(x => String(x || '').toLowerCase())
+        .join(' ')
+        .replace(/<[^>]+>/g, ' ');
+      return BLOCKED_TERMS.some(term => text.includes(term));
+    }
 
     function setMeta(title, description, robots) {
       document.title = `${title} — NewLevel CRM`;
@@ -245,6 +257,10 @@
 
       const canonicalUrl = item.canonical_url || '';
       if (isBlockedSource(canonicalUrl)) {
+        window.location.replace('/blog');
+        return;
+      }
+      if (hasBlockedTerms(item.title, item.excerpt, item.content)) {
         window.location.replace('/blog');
         return;
       }

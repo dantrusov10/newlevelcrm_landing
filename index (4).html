@@ -923,6 +923,18 @@ function isBlockedSourceUrl(url) {
     return String(url).toLowerCase().includes('kommersant');
   }
 }
+const BLOCKED_TERMS = [
+  'украин','ркн','роскомнадзор','сво','спецоперац','войн','боев',
+  'убийств','убил','погиб','погибл','тюрьм','посадили','осужден',
+  'осудили','арест','задержан','задержали','приговор','срок лишения'
+];
+function hasBlockedTerms(...parts) {
+  const text = parts
+    .map(x => String(x || '').toLowerCase())
+    .join(' ')
+    .replace(/<[^>]+>/g, ' ');
+  return BLOCKED_TERMS.some(term => text.includes(term));
+}
 
 async function loadNews(){
   try {
@@ -934,6 +946,7 @@ async function loadNews(){
       const svgKeys = Object.keys(SVGS);
       const mapped = items
       .filter(a => !isBlockedSourceUrl(a.canonical_url || ''))
+      .filter(a => !hasBlockedTerms(a.title, a.excerpt, a.content))
       .slice(0,6).map((a,i) => {
         const plain = stripHtml(a.content || '');
         const canonicalUrl = a.canonical_url || '';

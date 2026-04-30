@@ -312,6 +312,19 @@ function isBlockedSource(url) {
   }
 }
 
+const BLOCKED_TERMS = [
+  'украин','ркн','роскомнадзор','сво','спецоперац','войн','боев',
+  'убийств','убил','погиб','погибл','тюрьм','посадили','осужден',
+  'осудили','арест','задержан','задержали','приговор','срок лишения'
+];
+function hasBlockedTerms(...parts) {
+  const text = parts
+    .map(x => String(x || '').toLowerCase())
+    .join(' ')
+    .replace(/<[^>]+>/g, ' ');
+  return BLOCKED_TERMS.some(term => text.includes(term));
+}
+
 let allArticles = [];
 let filtered = [];
 let currentPage = 1;
@@ -398,6 +411,7 @@ async function loadArticles() {
     } while (page <= totalPages);
     allArticles = allItems
       .filter(item => !isBlockedSource(item.canonical_url || ''))
+      .filter(item => !hasBlockedTerms(item.title, item.excerpt, item.content))
       .map(normalizeCmsArticle);
   } catch(e) {
     console.error('Failed to load CMS articles', e);
