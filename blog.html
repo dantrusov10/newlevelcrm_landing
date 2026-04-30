@@ -347,11 +347,11 @@ function normalizeCmsArticle(item) {
   const rawCategory = item?.expand?.category_id;
   const body = item.content || '';
   const excerpt = item.excerpt || stripHtml(body).slice(0, 220) + (stripHtml(body).length > 220 ? '…' : '');
-  const baseCat = rawCategory?.name || rawCategory?.slug || item.category || 'IT-продажи';
-  const cat = classifyCategory(item.title, excerpt, body, baseCat, derivedSource);
   const canonicalUrl = item.canonical_url || '';
   const aiArticle = String(item.slug || '').startsWith('ai-');
   const derivedSource = sourceFromUrl(canonicalUrl);
+  const baseCat = rawCategory?.name || rawCategory?.slug || item.category || 'IT-продажи';
+  const cat = classifyCategory(item.title, excerpt, body, baseCat, derivedSource);
   const src = aiArticle ? 'Команда NewLevel CRM' : (derivedSource || 'NewLevel CRM');
 
   return {
