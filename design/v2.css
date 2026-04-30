@@ -63,6 +63,17 @@ body.design-v2 #nav {
   backdrop-filter: blur(14px) saturate(120%);
 }
 
+body.design-v2 .lm {
+  background-image: url("/assets/logo-nl.svg") !important;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+body.design-v2 .lm svg {
+  display: none !important;
+}
+
 body.design-v2 .sec,
 body.design-v2 .fc,
 body.design-v2 .card,
