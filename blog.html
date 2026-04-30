@@ -324,18 +324,22 @@ function formatRuDate(value) {
 const CATEGORY_RULES = {
   'Тендеры': ['тендер', 'госзакуп', '44-фз', '223-фз', 'аукцион', 'закупк', 'заказчик', 'поставщик', 'лот', 'эцп'],
   'ИИ': ['ии', 'ai', 'ml', 'llm', 'gpt', 'нейросет', 'искусственн интеллект', 'машинное обучен', 'генеративн', 'nlp'],
-  'Маркетинг': ['маркетинг', 'лидогенерац', 'abm', 'demand generation', 'контент-маркетинг', 'brand', 'позиционирован', 'retention', 'cac', 'ltv'],
-  'IT-продажи': ['crm', 'продаж', 'pipeline', 'воронк', 'сделк', 'b2b', 'кп', 'коммерческ предложен', 'win rate', 'sales']
+  'Маркетинг': ['маркетинг', 'лидогенерац', 'abm', 'demand generation', 'контент-маркетинг', 'brand', 'позиционирован', 'retention', 'cac', 'ltv', 'маркетплейс', 'ритейл', 'реклама', 'продвижен', 'бренд', 'аудитори', 'омниканал'],
+  'IT-продажи': ['crm', 'pipeline', 'воронк', 'сделк', 'b2b', 'кп', 'коммерческ предложен', 'win rate', 'sales', 'пресейл', 'аккаунт менеджер']
 };
 
-function classifyCategory(title, excerpt, body, fallback = 'IT-продажи') {
+function classifyCategory(title, excerpt, body, fallback = 'IT-продажи', src = '') {
   const text = `${title || ''} ${excerpt || ''} ${stripHtml(body || '')}`.toLowerCase();
   const scored = Object.entries(CATEGORY_RULES).map(([cat, keys]) => {
     const s = keys.reduce((acc, k) => acc + (text.includes(k) ? 1 : 0), 0);
     return [cat, s];
   }).sort((a, b) => b[1] - a[1]);
   const [bestCat, bestScore] = scored[0] || [fallback, 0];
-  if (bestScore < 2) return fallback;
+  if (bestScore < 2) {
+    const s = String(src || '').toLowerCase();
+    if (s.includes('vc') || s.includes('ведомост') || s.includes('коммерсант') || s.includes('lenta')) return 'Маркетинг';
+    return fallback;
+  }
   return bestCat;
 }
 
@@ -344,7 +348,7 @@ function normalizeCmsArticle(item) {
   const body = item.content || '';
   const excerpt = item.excerpt || stripHtml(body).slice(0, 220) + (stripHtml(body).length > 220 ? '…' : '');
   const baseCat = rawCategory?.name || rawCategory?.slug || item.category || 'IT-продажи';
-  const cat = classifyCategory(item.title, excerpt, body, baseCat);
+  const cat = classifyCategory(item.title, excerpt, body, baseCat, derivedSource);
   const canonicalUrl = item.canonical_url || '';
   const aiArticle = String(item.slug || '').startsWith('ai-');
   const derivedSource = sourceFromUrl(canonicalUrl);
