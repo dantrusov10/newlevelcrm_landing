@@ -886,6 +886,7 @@ function renderNews(arts){
 
 const CMS_BASE = 'https://cms-api.nwlvl.ru';
 const CMS_NEWS_API = `${CMS_BASE}/api/collections/site_articles/records?filter=(status=%22published%22)&sort=-published_at&expand=category_id&perPage=24`;
+const CMS_TEAM_AI_LATEST_API = `${CMS_BASE}/api/collections/site_articles/records?filter=(status=%22published%22%26%26slug~%22ai-%22)&sort=-published_at&expand=category_id&perPage=1`;
 
 function stripHtml(html) {
   return String(html || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -938,10 +939,19 @@ function hasBlockedTerms(...parts) {
 
 async function loadNews(){
   try {
-    const r = await fetch(CMS_NEWS_API, { headers: { 'Accept': 'application/json' } });
+    const [r, rAi] = await Promise.all([
+      fetch(CMS_NEWS_API, { headers: { 'Accept': 'application/json' } }),
+      fetch(CMS_TEAM_AI_LATEST_API, { headers: { 'Accept': 'application/json' } }).catch(() => null),
+    ]);
     if(!r.ok) throw new Error('cms error');
     const data = await r.json();
     const items = Array.isArray(data) ? data : (data.items || []);
+    let latestAiItem = null;
+    if (rAi && rAi.ok) {
+      const aiData = await rAi.json();
+      const aiItems = Array.isArray(aiData) ? aiData : (aiData.items || []);
+      latestAiItem = aiItems[0] || null;
+    }
     if(items.length > 0) {
       const svgKeys = Object.keys(SVGS);
       const sanitized = items
@@ -952,7 +962,7 @@ async function loadNews(){
       let selected = sanitized.slice(0, 6);
       const hasAiInSelected = selected.some(a => String(a.slug || '').startsWith('ai-'));
       if (!hasAiInSelected) {
-        const latestAi = sanitized.find(a => String(a.slug || '').startsWith('ai-'));
+        const latestAi = latestAiItem || sanitized.find(a => String(a.slug || '').startsWith('ai-'));
         if (latestAi) {
           selected = selected.slice(0, 5);
           selected.push(latestAi);
