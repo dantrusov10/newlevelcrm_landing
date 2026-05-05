@@ -885,7 +885,7 @@ function renderNews(arts){
 }
 
 const CMS_BASE = 'https://cms-api.nwlvl.ru';
-const CMS_NEWS_API = `${CMS_BASE}/api/collections/site_articles/records?filter=(status=%22published%22)&sort=-published_at&expand=category_id&perPage=6`;
+const CMS_NEWS_API = `${CMS_BASE}/api/collections/site_articles/records?filter=(status=%22published%22)&sort=-published_at&expand=category_id&perPage=24`;
 
 function stripHtml(html) {
   return String(html || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -944,10 +944,22 @@ async function loadNews(){
     const items = Array.isArray(data) ? data : (data.items || []);
     if(items.length > 0) {
       const svgKeys = Object.keys(SVGS);
-      const mapped = items
+      const sanitized = items
       .filter(a => !isBlockedSourceUrl(a.canonical_url || ''))
-      .filter(a => !hasBlockedTerms(a.title, a.excerpt, a.content))
-      .slice(0,6).map((a,i) => {
+      .filter(a => !hasBlockedTerms(a.title, a.excerpt, a.content));
+
+      // Keep feed mixed, but guarantee at least one latest "our team" AI article in the visible 6 cards.
+      let selected = sanitized.slice(0, 6);
+      const hasAiInSelected = selected.some(a => String(a.slug || '').startsWith('ai-'));
+      if (!hasAiInSelected) {
+        const latestAi = sanitized.find(a => String(a.slug || '').startsWith('ai-'));
+        if (latestAi) {
+          selected = selected.slice(0, 5);
+          selected.push(latestAi);
+        }
+      }
+
+      const mapped = selected.map((a,i) => {
         const plain = stripHtml(a.content || '');
         const canonicalUrl = a.canonical_url || '';
         const aiArticle = String(a.slug || '').startsWith('ai-');
